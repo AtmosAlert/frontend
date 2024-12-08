@@ -21,6 +21,7 @@ type Profile = {
 }
 
 const AccountInfo = ({session}: Props) => {
+  const {signOut} = useSession()
   const [Profile, setProfile] = useState<Profile | null>(null)
   const [NewProfile, setNewProfile] = useState<Profile | null>(null)
   const [EditProfile, setEditProfile] = useState<boolean>(false)
@@ -148,6 +149,7 @@ const updateUser = async () => {
     </View>) : (
       <View>
          <Button text="Edit" onPress={()=>setEditProfile(true)}/> 
+         <Button text="Sign out" color={Colors.secondary} onPress={()=>signOut()}/> 
     </View>)
     }
     </View>

@@ -3,6 +3,9 @@ import { Text, View,TextInput,StyleSheet } from 'react-native';
 import { useState } from 'react';
 
 import { useSession } from '@/ctx';
+import Styles from '@/constants/Styles';
+import Button from '@/components/ui/Button';
+import Colors from '@/constants/Colors';
 
 export default function SignIn() {
   const { signIn,session } = useSession();
@@ -15,7 +18,7 @@ export default function SignIn() {
     try {
       await signIn(username, password);
       console.log(session)
-      router.replace('/'); // Navigate after successful sign-in
+      router.replace('/');
     } catch (err) {
       const errorMessage =
       err instanceof Error ? err.message : 'Sign-in failed';
@@ -25,16 +28,22 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
+      <View style={[Styles.card,{width:'100%'}]}>
+        <Text style={[Styles.heading1,{margin:'auto'}]}>
+          Login 
+        </Text>
       <TextInput
-        style={styles.input}
+        style={Styles.inputField}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
+        placeholderTextColor={Colors.textPlaceholder}
       />
       <TextInput
-        style={styles.input}
+        style={Styles.inputField}
         placeholder="Password"
+        placeholderTextColor={Colors.textPlaceholder}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -43,11 +52,11 @@ export default function SignIn() {
         style={styles.error}>
         {error}
       </Text>
-      <Text
-        style={{color:'black'}}
+      <Button
+        text='Submit'
         onPress={handleSignIn}>
-        Sign In
-      </Text>
+      </Button>
+      </View>
     </View>
   );
 }
@@ -58,6 +67,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
+      backgroundColor:'#1a626e'
     },
     title: {
       fontSize: 24,
